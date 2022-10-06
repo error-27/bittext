@@ -1,14 +1,14 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://addons/pixfont/FontEditor.gd" type="Script" id=1]
-[ext_resource path="res://addons/pixfont/icons/Save.svg" type="Texture" id=2]
-[ext_resource path="res://addons/pixfont/components/CharRange.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/bittext/components/CharRange.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/bittext/FontEditor.gd" type="Script" id=2]
+[ext_resource path="res://addons/bittext/icons/Save.svg" type="Texture" id=3]
 
 [node name="FontEditor" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_min_size = Vector2( 0, 200 )
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_horizontal_guides_": [ 200.0 ],
 "_edit_vertical_guides_": [ 1024.0 ]
@@ -92,7 +92,7 @@ margin_bottom = 44.0
 disabled = true
 text = "Remove Last Range"
 
-[node name="0" parent="FontSettingButtons/Settings/Character Inputs/RangeList" instance=ExtResource( 3 )]
+[node name="0" parent="FontSettingButtons/Settings/Character Inputs/RangeList" instance=ExtResource( 1 )]
 visible = false
 
 [node name="Kerning" type="ScrollContainer" parent="FontSettingButtons"]
@@ -179,7 +179,7 @@ alignment = 2
 margin_right = 16.0
 margin_bottom = 16.0
 rect_pivot_offset = Vector2( -555, -29 )
-texture_normal = ExtResource( 2 )
+texture_normal = ExtResource( 3 )
 
 [connection signal="value_changed" from="FontSettingButtons/Settings/Character Inputs/HCharacterContainer/H Characters" to="." method="_on_H_Characters_value_changed"]
 [connection signal="value_changed" from="FontSettingButtons/Settings/Character Inputs/VCharacterContainer/V Characters" to="." method="_on_V_Characters_value_changed"]

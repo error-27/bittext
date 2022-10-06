@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Save.svg-4105a33fe646f7257fd7c97e8a180d77.stex"
+path="res://.import/Save.svg-927d2de22926643375aa26e9efb4e62e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/pixfont/icons/Save.svg"
-dest_files=[ "res://.import/Save.svg-4105a33fe646f7257fd7c97e8a180d77.stex" ]
+source_file="res://addons/bittext/icons/Save.svg"
+dest_files=[ "res://.import/Save.svg-927d2de22926643375aa26e9efb4e62e.stex" ]
 
 [params]
 
