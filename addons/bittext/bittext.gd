@@ -7,7 +7,7 @@ var interface = get_editor_interface()
 
 func _enter_tree() -> void:
 #	interface.get_inspector().connect("resource_selected", self, "_on_selection_changed")
-	font_dock = preload("res://addons/pixfont/FontEditor.tscn").instance()
+	font_dock = preload("res://addons/bittext/FontEditor.tscn").instance()
 	
 	dock_button = add_control_to_bottom_panel(font_dock, "BitText")
 

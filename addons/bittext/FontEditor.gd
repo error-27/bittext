@@ -7,11 +7,11 @@ var bitmapfont_file_dialog: EditorFileDialog = EditorFileDialog.new()
 var save_file_dialog: EditorFileDialog = EditorFileDialog.new()
 
 # Char range
-var char_range_scene: PackedScene = preload("res://addons/pixfont/components/CharRange.tscn")
+var char_range_scene: PackedScene = preload("res://addons/bittext/components/CharRange.tscn")
 var char_ranges: Array = [range(ord("A"), ord("Z") + 1)]
 
 # Kerning range
-var kerning_scene: PackedScene = preload("res://addons/pixfont/components/KerningInput.tscn")
+var kerning_scene: PackedScene = preload("res://addons/bittext/components/KerningInput.tscn")
 var kerning_pairs: Array = []
 
 # Font data
