@@ -1,0 +1,23 @@
+[gd_scene format=2]
+
+[node name="KerningInput" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="FirstChar" type="LineEdit" parent="."]
+margin_right = 58.0
+margin_bottom = 40.0
+
+[node name="SecondChar" type="LineEdit" parent="."]
+margin_left = 62.0
+margin_right = 120.0
+margin_bottom = 40.0
+
+[node name="Kerning" type="SpinBox" parent="."]
+margin_left = 124.0
+margin_right = 198.0
+margin_bottom = 40.0
+min_value = -100.0
+rounded = true
+allow_greater = true
+allow_lesser = true

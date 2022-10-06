@@ -1,0 +1,199 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/pixfont/FontEditor.gd" type="Script" id=1]
+[ext_resource path="res://addons/pixfont/icons/Save.svg" type="Texture" id=2]
+[ext_resource path="res://addons/pixfont/components/CharRange.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/pixfont/components/KerningInput.tscn" type="PackedScene" id=4]
+
+[node name="FontEditor" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 0, 200 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 200.0 ],
+"_edit_vertical_guides_": [ 1024.0 ]
+}
+
+[node name="FontSettingButtons" type="HBoxContainer" parent="."]
+anchor_bottom = 1.0
+margin_right = 540.0
+
+[node name="Settings" type="ScrollContainer" parent="FontSettingButtons"]
+margin_right = 159.0
+margin_bottom = 600.0
+scroll_horizontal_enabled = false
+
+[node name="Character Inputs" type="VBoxContainer" parent="FontSettingButtons/Settings"]
+margin_right = 159.0
+margin_bottom = 108.0
+
+[node name="HCharacterContainer" type="HBoxContainer" parent="FontSettingButtons/Settings/Character Inputs"]
+margin_right = 159.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="FontSettingButtons/Settings/Character Inputs/HCharacterContainer"]
+margin_top = 5.0
+margin_right = 81.0
+margin_bottom = 19.0
+text = "H Characters"
+
+[node name="H Characters" type="SpinBox" parent="FontSettingButtons/Settings/Character Inputs/HCharacterContainer"]
+unique_name_in_owner = true
+margin_left = 85.0
+margin_right = 159.0
+margin_bottom = 24.0
+min_value = 1.0
+value = 1.0
+editable = false
+
+[node name="VCharacterContainer" type="HBoxContainer" parent="FontSettingButtons/Settings/Character Inputs"]
+margin_top = 28.0
+margin_right = 159.0
+margin_bottom = 52.0
+
+[node name="Label" type="Label" parent="FontSettingButtons/Settings/Character Inputs/VCharacterContainer"]
+margin_top = 5.0
+margin_right = 79.0
+margin_bottom = 19.0
+text = "V Characters"
+
+[node name="V Characters" type="SpinBox" parent="FontSettingButtons/Settings/Character Inputs/VCharacterContainer"]
+unique_name_in_owner = true
+margin_left = 83.0
+margin_right = 157.0
+margin_bottom = 24.0
+min_value = 1.0
+value = 1.0
+editable = false
+
+[node name="HSeparator" type="HSeparator" parent="FontSettingButtons/Settings/Character Inputs"]
+margin_top = 56.0
+margin_right = 159.0
+margin_bottom = 60.0
+
+[node name="RangeList" type="VBoxContainer" parent="FontSettingButtons/Settings/Character Inputs"]
+unique_name_in_owner = true
+margin_top = 64.0
+margin_right = 159.0
+margin_bottom = 108.0
+
+[node name="RangeButton" type="Button" parent="FontSettingButtons/Settings/Character Inputs/RangeList"]
+unique_name_in_owner = true
+margin_right = 159.0
+margin_bottom = 20.0
+disabled = true
+text = "New Range"
+
+[node name="RemoveButton" type="Button" parent="FontSettingButtons/Settings/Character Inputs/RangeList"]
+unique_name_in_owner = true
+margin_top = 24.0
+margin_right = 159.0
+margin_bottom = 44.0
+disabled = true
+text = "Remove Last Range"
+
+[node name="0" parent="FontSettingButtons/Settings/Character Inputs/RangeList" instance=ExtResource( 3 )]
+visible = false
+
+[node name="Kerning" type="ScrollContainer" parent="FontSettingButtons"]
+margin_left = 163.0
+margin_right = 285.0
+margin_bottom = 600.0
+scroll_horizontal_enabled = false
+
+[node name="KerningList" type="VBoxContainer" parent="FontSettingButtons/Kerning"]
+unique_name_in_owner = true
+margin_right = 122.0
+margin_bottom = 44.0
+
+[node name="NewKerning" type="Button" parent="FontSettingButtons/Kerning/KerningList"]
+unique_name_in_owner = true
+margin_right = 122.0
+margin_bottom = 20.0
+disabled = true
+text = "New Kerning Pair"
+
+[node name="RemoveKerning" type="Button" parent="FontSettingButtons/Kerning/KerningList"]
+unique_name_in_owner = true
+margin_top = 24.0
+margin_right = 122.0
+margin_bottom = 44.0
+disabled = true
+text = "Remove Last Pair"
+
+[node name="0" parent="FontSettingButtons/Kerning/KerningList" instance=ExtResource( 4 )]
+visible = false
+margin_top = 48.0
+margin_right = 198.0
+margin_bottom = 72.0
+
+[node name="FileContainer" type="HBoxContainer" parent="FontSettingButtons"]
+margin_left = 289.0
+margin_right = 540.0
+margin_bottom = 600.0
+
+[node name="Button Container" type="VBoxContainer" parent="FontSettingButtons/FileContainer"]
+margin_right = 247.0
+margin_bottom = 600.0
+
+[node name="Spritesheet Container" type="HBoxContainer" parent="FontSettingButtons/FileContainer/Button Container"]
+margin_right = 247.0
+margin_bottom = 20.0
+
+[node name="Spritesheet Button" type="Button" parent="FontSettingButtons/FileContainer/Button Container/Spritesheet Container"]
+unique_name_in_owner = true
+margin_right = 124.0
+margin_bottom = 20.0
+disabled = true
+text = "Open Spritesheet"
+
+[node name="Font Container" type="HBoxContainer" parent="FontSettingButtons/FileContainer/Button Container"]
+margin_top = 24.0
+margin_right = 247.0
+margin_bottom = 44.0
+
+[node name="BitmapFont Button" type="Button" parent="FontSettingButtons/FileContainer/Button Container/Font Container"]
+margin_right = 125.0
+margin_bottom = 20.0
+text = "Open BitmapFont"
+
+[node name="New Button" type="Button" parent="FontSettingButtons/FileContainer/Button Container/Font Container"]
+margin_left = 129.0
+margin_right = 247.0
+margin_bottom = 20.0
+text = "New BitmapFont"
+
+[node name="TextureRect" type="TextureRect" parent="FontSettingButtons/FileContainer"]
+unique_name_in_owner = true
+margin_left = 251.0
+margin_right = 251.0
+margin_bottom = 600.0
+
+[node name="Panel" type="Panel" parent="FontSettingButtons"]
+margin_left = 544.0
+margin_right = 544.0
+margin_bottom = 600.0
+
+[node name="Edit Buttons" type="HBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -16.0
+margin_bottom = 16.0
+alignment = 2
+
+[node name="TextureButton" type="TextureButton" parent="Edit Buttons"]
+margin_right = 16.0
+margin_bottom = 16.0
+rect_pivot_offset = Vector2( -555, -29 )
+texture_normal = ExtResource( 2 )
+
+[connection signal="value_changed" from="FontSettingButtons/Settings/Character Inputs/HCharacterContainer/H Characters" to="." method="_on_H_Characters_value_changed"]
+[connection signal="value_changed" from="FontSettingButtons/Settings/Character Inputs/VCharacterContainer/V Characters" to="." method="_on_V_Characters_value_changed"]
+[connection signal="pressed" from="FontSettingButtons/Settings/Character Inputs/RangeList/RangeButton" to="." method="_on_RangeButton_pressed"]
+[connection signal="pressed" from="FontSettingButtons/Settings/Character Inputs/RangeList/RemoveButton" to="." method="_on_RemoveButton_pressed"]
+[connection signal="pressed" from="FontSettingButtons/Kerning/KerningList/NewKerning" to="." method="_on_NewKerning_pressed"]
+[connection signal="pressed" from="FontSettingButtons/Kerning/KerningList/RemoveKerning" to="." method="_on_RemoveKerning_pressed"]
+[connection signal="pressed" from="FontSettingButtons/FileContainer/Button Container/Spritesheet Container/Spritesheet Button" to="." method="_on_Spritesheet_Button_pressed"]
+[connection signal="pressed" from="FontSettingButtons/FileContainer/Button Container/Font Container/BitmapFont Button" to="." method="_on_BitmapFont_Button_pressed"]
+[connection signal="pressed" from="Edit Buttons/TextureButton" to="." method="_on_Savebutton_pressed"]
