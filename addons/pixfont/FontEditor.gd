@@ -1,3 +1,4 @@
+tool
 extends Control
 
 # Nodes
@@ -21,7 +22,7 @@ var v_chars: int = 1
 var h_chars: int = 1
 
 #Init
-func _enter_tree():
+func _enter_tree() -> void:
 	# Add file dialogs
 	add_child(spritesheet_file_dialog)
 	add_child(bitmapfont_file_dialog)
@@ -32,7 +33,7 @@ func _enter_tree():
 	get_node("Settings/Character Inputs/RangeList/0/SecondChar").connect("text_changed", self, "_update_ranges")
 
 # Init
-func _ready():
+func _ready() -> void:
 	# Initialize all file dialogs
 	spritesheet_file_dialog.add_filter("*.png, *.jpg ; Image File")
 	spritesheet_file_dialog.set_mode(EditorFileDialog.MODE_OPEN_FILE)
@@ -85,7 +86,7 @@ func regenerate_chars() -> void:
 
 
 # SIGNALED FUNCTIONS
-func _on_Spritesheet_Button_pressed():
+func _on_Spritesheet_Button_pressed() -> void:
 	# Open file dialog and wait
 	spritesheet_file_dialog.popup_centered_ratio()
 	var file = yield(spritesheet_file_dialog, "file_selected")
@@ -107,7 +108,7 @@ func _on_Spritesheet_Button_pressed():
 	$"%V Characters".editable = true
 	$"Settings/Character Inputs/RangeList/0".visible = true
 
-func _on_BitmapFont_Button_pressed():
+func _on_BitmapFont_Button_pressed() -> void:
 	# Open file dialog and wait
 	bitmapfont_file_dialog.popup_centered_ratio()
 	var file = yield(bitmapfont_file_dialog, "file_selected")
@@ -136,7 +137,7 @@ func _on_BitmapFont_Button_pressed():
 		$"%V Characters".editable = false
 		$"Settings/Character Inputs/RangeList/0".visible = false
 
-func _on_New_Button_pressed():
+func _on_New_Button_pressed() -> void:
 	
 	font_resource = BitmapFont.new()
 	
@@ -149,17 +150,17 @@ func _on_New_Button_pressed():
 	$"Settings/Character Inputs/RangeList/0".visible = false
 
 # Save the file
-func _on_Savebutton_pressed():
+func _on_Savebutton_pressed() -> void:
 	save_file_dialog.popup_centered_ratio()
 	font_path = yield(save_file_dialog, "file_selected")
 	ResourceSaver.save(font_path, font_resource)
 
 # Change sprite slicing
-func _on_V_Characters_value_changed(value):
+func _on_V_Characters_value_changed(value) -> void:
 	v_chars = value
 	regenerate_chars()
 
-func _on_H_Characters_value_changed(value):
+func _on_H_Characters_value_changed(value) -> void:
 	h_chars = value
 	regenerate_chars()
 
@@ -200,7 +201,28 @@ func _update_ranges(new_text: String) -> void:
 
 func _on_NewKerning_pressed() -> void:
 	$"%RemoveKerning".disabled = false
+	var kerning_pair: Node = kerning_scene.instance()
+	kerning_pair.name = str(kerning_pairs.size())
+	$"%KerningList".add_child(kerning_pair)
 	
+	kerning_pairs.append([
+		ord(kerning_pair.get_node("FirstChar").text),
+		ord(kerning_pair.get_node("SecondChar").text),
+		ord(kerning_pair.get_node("Kerning").value)
+	])
+	
+	kerning_pair.get_node("FirstChar").connect("text_changed", self, "_update_kerning")
+	kerning_pair.get_node("SecondChar").connect("text_changed", self, "_update_kerning")
+	kerning_pair.get_node("Kerning").connect("value_changed", self, "_update_kerning")
+	
+	$"%RemoveKerning".disabled = false
 
 func _on_RemoveKerning_pressed() -> void:
-	pass # Replace with function body.
+	$"%KerningList".get_node(str(kerning_pairs.size() - 1)).queue_free()
+	kerning_pairs.pop_back()
+	regenerate_chars()
+	if kerning_pairs.size() == 0:
+		$"%RemoveKerning".disabled = true
+
+func _update_kerning() -> void:
+	pass

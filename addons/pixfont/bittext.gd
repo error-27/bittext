@@ -5,14 +5,14 @@ var font_dock: Node
 var dock_button: ToolButton
 var interface = get_editor_interface()
 
-func _enter_tree():
+func _enter_tree() -> void:
 #	interface.get_inspector().connect("resource_selected", self, "_on_selection_changed")
 	font_dock = preload("res://addons/pixfont/FontEditor.tscn").instance()
 	
 	dock_button = add_control_to_bottom_panel(font_dock, "BitText")
 
 
-func _exit_tree():
+func _exit_tree() -> void:
 	remove_control_from_bottom_panel(font_dock)
 	font_dock.free()
 #
