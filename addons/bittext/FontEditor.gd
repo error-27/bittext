@@ -29,8 +29,8 @@ func _enter_tree() -> void:
 	add_child(save_file_dialog)
 	
 	# Connect char range 0
-	get_node("Settings/Character Inputs/RangeList/0/FirstChar").connect("text_changed", self, "_update_ranges")
-	get_node("Settings/Character Inputs/RangeList/0/SecondChar").connect("text_changed", self, "_update_ranges")
+	get_node("FontSettingButtons/Settings/Character Inputs/RangeList/0/FirstChar").connect("text_changed", self, "_update_ranges")
+	get_node("FontSettingButtons/Settings/Character Inputs/RangeList/0/SecondChar").connect("text_changed", self, "_update_ranges")
 
 # Init
 func _ready() -> void:
@@ -83,6 +83,9 @@ func regenerate_chars() -> void:
 			# TODO: Remove debug text once all is done
 			print("Assigned Character: " + char(c))
 			print("(" + str(horizontal) + "," + str(vertical) + ")")
+	
+	for pair in kerning_pairs:
+		font_resource.add_kerning_pair(pair[0], pair[1], pair[2])
 
 
 # SIGNALED FUNCTIONS
@@ -106,7 +109,7 @@ func _on_Spritesheet_Button_pressed() -> void:
 	$"%RangeButton".disabled = false
 	$"%H Characters".editable = true
 	$"%V Characters".editable = true
-	$"Settings/Character Inputs/RangeList/0".visible = true
+	$"FontSettingButtons/Settings/Character Inputs/RangeList/0".visible = true
 
 func _on_BitmapFont_Button_pressed() -> void:
 	# Open file dialog and wait
@@ -129,13 +132,15 @@ func _on_BitmapFont_Button_pressed() -> void:
 		$"%RangeButton".disabled = false
 		$"%H Characters".editable = true
 		$"%V Characters".editable = true
-		$"Settings/Character Inputs/RangeList/0".visible = true
+		$"FontSettingButtons/Settings/Character Inputs/RangeList/0".visible = true
+		$"%NewKerning".disabled = false
 	else:
 		print("locking")
 		$"%RangeButton".disabled = true
 		$"%H Characters".editable = false
 		$"%V Characters".editable = false
-		$"Settings/Character Inputs/RangeList/0".visible = false
+		$"FontSettingButtons/Settings/Character Inputs/RangeList/0".visible = false
+		$"%NewKerning".disabled = true
 
 func _on_New_Button_pressed() -> void:
 	
@@ -147,7 +152,8 @@ func _on_New_Button_pressed() -> void:
 	$"%RangeButton".disabled = true
 	$"%H Characters".editable = false
 	$"%V Characters".editable = false
-	$"Settings/Character Inputs/RangeList/0".visible = false
+	$"FontSettingButtons/Settings/Character Inputs/RangeList/0".visible = false
+	$"%NewKerning".disabled = true
 
 # Save the file
 func _on_Savebutton_pressed() -> void:
@@ -199,6 +205,7 @@ func _update_ranges(new_text: String) -> void:
 		)
 	regenerate_chars()
 
+# Kerning functions
 func _on_NewKerning_pressed() -> void:
 	$"%RemoveKerning".disabled = false
 	var kerning_pair: Node = kerning_scene.instance()
@@ -208,8 +215,9 @@ func _on_NewKerning_pressed() -> void:
 	kerning_pairs.append([
 		ord(kerning_pair.get_node("FirstChar").text),
 		ord(kerning_pair.get_node("SecondChar").text),
-		ord(kerning_pair.get_node("Kerning").value)
+		kerning_pair.get_node("Kerning").value
 	])
+	print(kerning_pairs.size())
 	
 	kerning_pair.get_node("FirstChar").connect("text_changed", self, "_update_kerning")
 	kerning_pair.get_node("SecondChar").connect("text_changed", self, "_update_kerning")
@@ -224,5 +232,13 @@ func _on_RemoveKerning_pressed() -> void:
 	if kerning_pairs.size() == 0:
 		$"%RemoveKerning".disabled = true
 
-func _update_kerning() -> void:
-	pass
+func _update_kerning(new) -> void:
+	print("updating kerning")
+	var list = $"%KerningList"
+	for i in range(kerning_pairs.size()):
+		kerning_pairs[i] = [
+			ord(list.get_node(str(i) + "/FirstChar").text),
+			ord(list.get_node(str(i) + "/SecondChar").text),
+			list.get_node(str(i) + "/Kerning").value
+		]
+	regenerate_chars()
