@@ -59,12 +59,22 @@ func regenerate_chars() -> void:
 	
 	font_resource.height = rect_height
 	
+	if char_ranges[r][0] == -1:
+		var found_range: bool = false
+		while not found_range:
+			r += 1
+			if r == char_ranges.size():
+				return
+			if char_ranges[r][0] != -1:
+				found_range = true
+	
 	# Start generation loop
 	# Check each row (y axis)
 	for vertical in v_chars:
 		# Check each column (x axis)
 		for horizontal in h_chars:
 			# Move to next char range if necessary
+			
 			if character == char_ranges[r].size():
 				# If we are at the last range, end the loop
 				if r + 1 == char_ranges.size():
@@ -73,6 +83,15 @@ func regenerate_chars() -> void:
 				# Increment range number, reset character
 				character = 0
 				r += 1
+				if char_ranges[r][0] == -1:
+					var found_range: bool = false
+					while not found_range:
+						r += 1
+						if r == char_ranges.size():
+							return
+						if char_ranges[r][0] != -1:
+							found_range = true
+				
 			
 			# Assign current character and increment
 			var c: int = char_ranges[r][character]
@@ -85,7 +104,8 @@ func regenerate_chars() -> void:
 			print("(" + str(horizontal) + "," + str(vertical) + ")")
 	
 	for pair in kerning_pairs:
-		font_resource.add_kerning_pair(pair[0], pair[1], pair[2])
+		if pair[0] != -1 and pair[1] != -1:
+			font_resource.add_kerning_pair(pair[0], pair[1], pair[2])
 
 
 # SIGNALED FUNCTIONS
@@ -200,8 +220,8 @@ func _update_ranges(new_text: String) -> void:
 	var list = $"%RangeList"
 	for i in range(char_ranges.size()):
 		char_ranges[i] = range(
-			ord(list.get_node(str(i) + "/FirstChar").text), 
-			ord(list.get_node(str(i) + "/SecondChar").text) + 1
+			ord(list.get_node(str(i) + "/FirstChar").text) if list.get_node(str(i) + "/FirstChar").text != "" else -1, 
+			ord(list.get_node(str(i) + "/SecondChar").text) + 1 if list.get_node(str(i) + "/SecondChar").text != "" else -1
 		)
 	regenerate_chars()
 
@@ -237,8 +257,8 @@ func _update_kerning(new) -> void:
 	var list = $"%KerningList"
 	for i in range(kerning_pairs.size()):
 		kerning_pairs[i] = [
-			ord(list.get_node(str(i) + "/FirstChar").text),
-			ord(list.get_node(str(i) + "/SecondChar").text),
+			ord(list.get_node(str(i) + "/FirstChar").text) if list.get_node(str(i) + "/FirstChar").text != "" else -1,
+			ord(list.get_node(str(i) + "/SecondChar").text) if list.get_node(str(i) + "/SecondChar").text != "" else -1,
 			list.get_node(str(i) + "/Kerning").value
 		]
 	regenerate_chars()
