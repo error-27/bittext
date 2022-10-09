@@ -8,12 +8,14 @@ margin_bottom = 40.0
 margin_right = 58.0
 margin_bottom = 40.0
 text = "A"
+max_length = 1
 
 [node name="SecondChar" type="LineEdit" parent="."]
 margin_left = 62.0
 margin_right = 120.0
 margin_bottom = 40.0
 text = "A"
+max_length = 1
 
 [node name="Kerning" type="SpinBox" parent="."]
 margin_left = 124.0
