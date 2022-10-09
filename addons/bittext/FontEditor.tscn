@@ -157,16 +157,18 @@ margin_right = 247.0
 margin_bottom = 20.0
 text = "New BitmapFont"
 
-[node name="TextureRect" type="TextureRect" parent="FontSettingButtons/FileContainer"]
-unique_name_in_owner = true
+[node name="Texture Panel" type="Panel" parent="FontSettingButtons/FileContainer"]
 margin_left = 251.0
 margin_right = 251.0
 margin_bottom = 600.0
 
-[node name="Panel" type="Panel" parent="FontSettingButtons"]
-margin_left = 544.0
-margin_right = 544.0
-margin_bottom = 600.0
+[node name="TextureRect" type="TextureRect" parent="FontSettingButtons/FileContainer/Texture Panel"]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 462.0
+expand = true
+stretch_mode = 5
 
 [node name="Edit Buttons" type="HBoxContainer" parent="."]
 anchor_left = 1.0

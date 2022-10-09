@@ -181,6 +181,7 @@ func _on_New_Button_pressed() -> void:
 
 # Save the file
 func _on_Savebutton_pressed() -> void:
+	regenerate_chars()
 	save_file_dialog.popup_centered_ratio()
 	font_path = yield(save_file_dialog, "file_selected")
 	ResourceSaver.save(font_path, font_resource)
@@ -188,11 +189,9 @@ func _on_Savebutton_pressed() -> void:
 # Change sprite slicing
 func _on_V_Characters_value_changed(value) -> void:
 	v_chars = value
-	regenerate_chars()
 
 func _on_H_Characters_value_changed(value) -> void:
 	h_chars = value
-	regenerate_chars()
 
 # Change character ranges
 func _on_RangeButton_pressed() -> void:
@@ -208,14 +207,12 @@ func _on_RangeButton_pressed() -> void:
 	char_range.get_node("FirstChar").connect("text_changed", self, "_update_ranges")
 	char_range.get_node("SecondChar").connect("text_changed", self, "_update_ranges")
 	
-	regenerate_chars()
 	
 	$"%RemoveButton".disabled = false
 
 func _on_RemoveButton_pressed() -> void:
 	$"%RangeList".get_node(str(char_ranges.size() - 1)).queue_free()
 	char_ranges.pop_back()
-	regenerate_chars()
 	if char_ranges.size() == 1:
 		$"%RemoveButton".disabled = true
 
@@ -227,7 +224,6 @@ func _update_ranges(new_text: String) -> void:
 			ord(list.get_node(str(i) + "/FirstChar").text) if list.get_node(str(i) + "/FirstChar").text != "" else -1, 
 			ord(list.get_node(str(i) + "/SecondChar").text) + 1 if list.get_node(str(i) + "/SecondChar").text != "" else -1
 		)
-	regenerate_chars()
 
 # Kerning functions
 func _on_NewKerning_pressed() -> void:
@@ -252,7 +248,6 @@ func _on_NewKerning_pressed() -> void:
 func _on_RemoveKerning_pressed() -> void:
 	$"%KerningList".get_node(str(kerning_pairs.size() - 1)).queue_free()
 	kerning_pairs.pop_back()
-	regenerate_chars()
 	if kerning_pairs.size() == 0:
 		$"%RemoveKerning".disabled = true
 
@@ -265,4 +260,3 @@ func _update_kerning(new) -> void:
 			ord(list.get_node(str(i) + "/SecondChar").text) if list.get_node(str(i) + "/SecondChar").text != "" else -1,
 			list.get_node(str(i) + "/Kerning").value
 		]
-	regenerate_chars()
