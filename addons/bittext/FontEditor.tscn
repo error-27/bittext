@@ -189,4 +189,5 @@ texture_normal = ExtResource( 3 )
 [connection signal="pressed" from="FontSettingButtons/Kerning/KerningList/RemoveKerning" to="." method="_on_RemoveKerning_pressed"]
 [connection signal="pressed" from="FontSettingButtons/FileContainer/Button Container/Spritesheet Container/Spritesheet Button" to="." method="_on_Spritesheet_Button_pressed"]
 [connection signal="pressed" from="FontSettingButtons/FileContainer/Button Container/Font Container/BitmapFont Button" to="." method="_on_BitmapFont_Button_pressed"]
+[connection signal="pressed" from="FontSettingButtons/FileContainer/Button Container/Font Container/New Button" to="." method="_on_New_Button_pressed"]
 [connection signal="pressed" from="Edit Buttons/TextureButton" to="." method="_on_Savebutton_pressed"]

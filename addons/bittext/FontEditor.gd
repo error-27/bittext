@@ -130,6 +130,7 @@ func _on_Spritesheet_Button_pressed() -> void:
 	$"%H Characters".editable = true
 	$"%V Characters".editable = true
 	$"FontSettingButtons/Settings/Character Inputs/RangeList/0".visible = true
+	$"%NewKerning".disabled = false
 
 func _on_BitmapFont_Button_pressed() -> void:
 	# Open file dialog and wait
