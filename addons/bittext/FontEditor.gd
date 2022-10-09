@@ -98,10 +98,6 @@ func regenerate_chars() -> void:
 			font_resource.add_char(c, 0, Rect2(rect_width * horizontal, rect_height * vertical, rect_width, rect_height))
 			
 			character += 1
-			
-			# TODO: Remove debug text once all is done
-			print("Assigned Character: " + char(c))
-			print("(" + str(horizontal) + "," + str(vertical) + ")")
 	
 	for pair in kerning_pairs:
 		if pair[0] != -1 and pair[1] != -1:
@@ -138,17 +134,16 @@ func _on_BitmapFont_Button_pressed() -> void:
 	var file = yield(bitmapfont_file_dialog, "file_selected")
 	
 	# Load the file
-	font_resource = load(file)
-	if not font_resource is BitmapFont:
+	var res: Resource = load(file)
+	if not res is BitmapFont:
 		font_resource = BitmapFont.new()
 		return
+	font_resource = res
 	font_path = file
-	print(file)
 	
 	# Remove all restrictions
 	$"%Spritesheet Button".disabled = false
 	if font_resource.textures:
-		print("unlocking")
 		# Load texture
 		$"%TextureRect".texture = font_resource.get_texture(0)
 		spritesheet = font_resource.get_texture(0)
@@ -159,7 +154,6 @@ func _on_BitmapFont_Button_pressed() -> void:
 		$"FontSettingButtons/Settings/Character Inputs/RangeList/0".visible = true
 		$"%NewKerning".disabled = false
 	else:
-		print("locking")
 		$"%RangeButton".disabled = true
 		$"%H Characters".editable = false
 		$"%V Characters".editable = false
@@ -195,7 +189,6 @@ func _on_H_Characters_value_changed(value) -> void:
 
 # Change character ranges
 func _on_RangeButton_pressed() -> void:
-	print("new range")
 	var char_range: Node = char_range_scene.instance()
 	char_range.name = str(char_ranges.size())
 	$"%RangeList".add_child(char_range)
@@ -217,7 +210,6 @@ func _on_RemoveButton_pressed() -> void:
 		$"%RemoveButton".disabled = true
 
 func _update_ranges(new_text: String) -> void:
-	print("ranges updated")
 	var list = $"%RangeList"
 	for i in range(char_ranges.size()):
 		char_ranges[i] = range(
@@ -237,7 +229,6 @@ func _on_NewKerning_pressed() -> void:
 		ord(kerning_pair.get_node("SecondChar").text),
 		kerning_pair.get_node("Kerning").value
 	])
-	print(kerning_pairs.size())
 	
 	kerning_pair.get_node("FirstChar").connect("text_changed", self, "_update_kerning")
 	kerning_pair.get_node("SecondChar").connect("text_changed", self, "_update_kerning")
@@ -252,7 +243,6 @@ func _on_RemoveKerning_pressed() -> void:
 		$"%RemoveKerning".disabled = true
 
 func _update_kerning(new) -> void:
-	print("updating kerning")
 	var list = $"%KerningList"
 	for i in range(kerning_pairs.size()):
 		kerning_pairs[i] = [
