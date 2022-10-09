@@ -138,6 +138,9 @@ func _on_BitmapFont_Button_pressed() -> void:
 	
 	# Load the file
 	font_resource = load(file)
+	if not font_resource is BitmapFont:
+		font_resource = BitmapFont.new()
+		return
 	font_path = file
 	print(file)
 	
