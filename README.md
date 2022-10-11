@@ -12,3 +12,5 @@
 5. Add ranges of characters. These are the different sets of characters in your spritesheet. These are calculated in order of the Unicode table, so make sure your spritesheet is in that order.
 6. Add kerning values to modify spacing between sets of letters. This is specifically the spacing between letters when the characters are in the order the kerning pair is in. Kerning between "W" and "M" is separate from kerning between "M" and "W".
 7. Press the save button in the upper right corner to save your font to your project file system. If you save it to a pre-existing resource, reload your project files (Godot bug, not a plugin bug).
+
+### ![Video Tutorial](https://youtu.be/vWENMtP1Hf0)
